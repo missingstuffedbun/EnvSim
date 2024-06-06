@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
+from scipy.ndimage import zoom
 
 
 def tif_to_array(file_path: str, show=False, save=False, name="array"):
@@ -47,3 +48,22 @@ def npy_to_array(file_path: str, show=False):
         plt.imshow(arr)
 
     return arr
+
+
+def scale_image(image, factor=0.1):
+    scaled_image = zoom(image, factor)
+
+    plt.figure(figsize=(10, 5))
+
+    plt.subplot(1, 2, 1)
+    plt.imshow(image, cmap='gray')
+    plt.title(f'Original Image {image.shape}')
+    plt.axis('off')
+
+    plt.subplot(1, 2, 2)
+    plt.imshow(scaled_image, cmap='gray')
+    plt.title(f'Scaled Image ({factor * 100}%) {scaled_image.shape}')
+    plt.axis('off')
+
+    plt.show()
+    return scaled_image
